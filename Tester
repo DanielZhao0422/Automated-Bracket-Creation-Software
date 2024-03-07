@@ -1,0 +1,300 @@
+import java.util.*;
+import java.io.*;
+class Tester {
+  public static void main(String[] args){
+
+    //These are my variables I will use throughout my code
+    int check = 0;
+    int used_count = 0;
+    int player_number;
+    int winner;
+    String final_winner;
+    int used[] = new int[16];
+
+    String players[] = new String[16];
+    String matchups[][] = new String[2][8];
+
+    String playersRound2[] = new String[8];
+    String matchupsRound2[][] = new String[2][4];
+
+    String playersRound3[] = new String[4];
+    String matchupsRound3[][] = new String[2][2];
+
+    String playersRound4[] = new String[2];
+    String matchupsRound4[][] = new String[2][1];
+    //These are 2d arrays. These matchups are determined by every coloumn. This overall means that 8 represents the amount of games and the 2 represents the amount of players in each game
+
+    String space = " ";
+    //This is overall used to make my code seem more organized
+
+    System.out.println("Welcome to the Table Tennis Bracket Generator");
+
+    for (int j = 0; j < 16; j++) {
+      System.out.println("Please enter the name of player" + space + (j + 1));
+      //j + 1 essentailly prevents the index to start from 0. (If it did, it would logically not make sense)
+      Scanner names = new Scanner(System.in);
+      players[j] = names.nextLine();
+    }
+    //This for loop essentially asks for all the inputs and adds them to the array
+
+    //Round 1
+
+    for (int x = 0; x < 8; x++){
+      //This loop defines every column in the 2d array(amount of games)
+      for (int y = 0; y < 2; y++) {
+        //This loop defines each row in the 2d array(players in each game)
+
+        //a do while loop is used here cause we need to run the loop first at least once and then later check the parameters to see if we need to run again
+        //This essentially makes sure each player is only used only once and then they are stored int eh used array. used_count is used to keep track of the last index initialzied. 
+        do {
+          check = 0;
+          Brackets number = new Brackets();
+          player_number = number.random();
+
+          for(int j = 0; j < used_count; j++){
+            if (player_number == used[j]) {
+              check = 1;
+              break;
+            }
+          }
+          if (check == 0){
+            used[used_count] = player_number;
+            used_count++;
+            matchups[y][x] = players[player_number];
+          }
+        } while (check == 1);
+      }
+    }
+
+    // This generates a number and checks if this number is in used[] is being used in the for loop. 
+
+    for (int x = 0; x < 8; x++) {
+      System.out.println("Group" + space + (x + 1) + ":" + space + matchups[0][x] + space + "is playing" + space + matchups[1][x]);
+    }
+    //Prints out which players are playing each other randomly
+    player_number = 0;
+
+
+
+          for (int x = 0; x < 8; x++) {
+            used_count = 0;
+            //user selects which group to overall edit
+            do
+            {
+              check = 0;
+              System.out.println("Which group would you like to select");
+              Scanner input = new Scanner(System.in);
+              winner = input.nextInt();
+              for (int j = 0; j < used_count; j++) {
+                  if (winner == used[j]) {
+                    System.out.println("You have already changed that group. Please select another group");
+                    check = 1;
+                    break;
+
+              }
+            }
+          } while (check == 1);
+          do {
+              check = 0;
+              System.out.println("Which player won?");
+              Scanner input2 = new Scanner(System.in);
+              String player_winner = input2.nextLine();
+
+              //If user selects player 1 as winner, it adds player 1 to the next round's array
+              if (player_winner.equalsIgnoreCase(matchups[0][winner - 1])){
+              playersRound2[player_number] = matchups[0][winner - 1];
+                player_number++;
+              }
+
+              //If user selects player 2 as winner, it adds player 2 to the next round's array
+              else if (player_winner.equalsIgnoreCase(matchups[1][winner - 1])){
+                playersRound2[player_number] = matchups[1][winner - 1];
+                player_number++;
+              }
+              else
+              {
+                System.out.println("Invalid Input");
+                check = 1;
+              }
+            } while (check == 1);
+          }
+
+           //Round 2
+
+           //All the comments from round 1 applies to this round
+
+    for (int x = 0; x < 4; x++){
+      for (int y = 0; y < 2; y++) {
+        do {
+          check = 0;
+          Brackets number = new Brackets();
+          player_number = number.random2();
+
+          for(int j = 0; j < used_count; j++){
+            if (player_number == used [j]) {
+              check = 1;
+              break;
+            }
+          }
+          if (check == 0){
+            used[used_count] = player_number;
+            used_count++;
+            matchupsRound2[y][x] = playersRound2[player_number];
+          }
+        } while (check == 1);
+      }
+    }
+    for (int x = 0; x < 4; x++) {
+      System.out.println("Group" + space + (x + 1) + ":" + space + matchupsRound2[0][x] + space + "is playing" + space + matchupsRound2[1][x]);
+    }
+    player_number = 0;
+
+
+
+          for (int x = 0; x < 4; x++) {
+            used_count = 0;
+            do
+            {
+              check = 0;
+              System.out.println("Which group would you like to select");
+              Scanner input = new Scanner(System.in);
+              winner = input.nextInt();
+              for (int j = 0; j < used_count; j++) {
+                  if (winner == used[j]) {
+                    System.out.println("You have already changed that group. Please select another group");
+                    check = 1;
+                    break;
+
+              }
+            }
+          } while (check == 1);
+          do {
+              check = 0;
+              System.out.println("Which player won?");
+              Scanner input2 = new Scanner(System.in);
+              String player_winner = input2.nextLine();
+
+              if (player_winner.equalsIgnoreCase(matchupsRound2[0][winner - 1])){
+                playersRound3[player_number] = matchupsRound2[0][winner - 1];
+                player_number++;
+              }
+              else if (player_winner.equalsIgnoreCase(matchupsRound2[1][winner - 1])){
+                playersRound3[player_number] = matchupsRound2[1][winner - 1];
+                player_number++;
+              }
+              else
+              {
+                System.out.println("Invalid Input");
+                check = 1;
+              }
+            } while (check == 1);
+          }
+
+           //Round 3
+
+           //All the comments from round 1 applies to this round
+
+    for (int x = 0; x < 2; x++){
+      for (int y = 0; y < 2; y++) {
+        do {
+          check = 0;
+          Brackets number = new Brackets();
+          player_number = number.random3();
+
+          for(int j = 0; j < used_count; j++){
+            if (player_number == used [j]) {
+              check = 1;
+              break;
+            }
+          }
+          if (check == 0){
+            used[used_count] = player_number;
+            used_count++;
+            matchupsRound3[y][x] = players[player_number];
+          }
+        } while (check == 1);
+      }
+    }
+    for (int x = 0; x < 2; x++) {
+      System.out.println("Group" + space + (x + 1) + ":" + space + matchupsRound3[0][x] + space + "is playing" + space + matchupsRound3[1][x]);
+    }
+    player_number = 0;
+
+
+
+          for (int x = 0; x < 2; x++) {
+            used_count = 0;
+            do
+            {
+              check = 0;
+              System.out.println("Which group would you like to select");
+              Scanner input = new Scanner(System.in);
+              winner = input.nextInt();
+              for (int j = 0; j < used_count; j++) {
+                  if (winner == used[j]) {
+                    System.out.println("You have already changed that group. Please select another group");
+                    check = 1;
+                    break;
+
+              }
+            }
+          } while (check == 1);
+          do {
+              check = 0;
+              System.out.println("Which player won?");
+              Scanner input2 = new Scanner(System.in);
+              String player_winner = input2.nextLine();
+
+              if (player_winner.equalsIgnoreCase(matchupsRound3[0][winner - 1])){
+                playersRound4[player_number] = matchupsRound3[0][winner - 1];
+                player_number++;
+              }
+              else if (player_winner.equalsIgnoreCase(matchupsRound3[1][winner - 1])){
+                playersRound4[player_number] = matchupsRound3[1][winner - 1];
+                player_number++;
+              }
+              else
+              {
+                System.out.println("Invalid Input");
+                check = 1;
+              }
+            } while (check == 1);
+          }
+
+          //Final Round
+
+          matchupsRound4[0][0] = playersRound4[0];
+          matchupsRound4[1][0] = playersRound4[1];
+          //No randomization is needed since there are only 2 players left
+
+          System.out.println(matchupsRound4[0][0] + space + "is playing" + space + matchupsRound4[1][0]);
+
+          do {
+            check = 0;
+            System.out.println("Which player won?");
+            Scanner input2 = new Scanner(System.in);
+            String player_winner = input2.nextLine();
+              if (player_winner.equalsIgnoreCase(matchupsRound4[0][0])) {
+                final_winner = matchupsRound4[0][0];
+                System.out.println("The final winner is... " + space + final_winner + space + "!");
+                System.exit(0);
+                //First player has won
+
+              }
+              else if (player_winner.equalsIgnoreCase(matchupsRound4[0][1])) {
+                final_winner = matchupsRound4[0][1];
+                System.out.println("The final winner is... " + space + final_winner + space + "!");
+                System.exit(0);
+                //Second player has won
+
+              }
+              else 
+              {
+                System.out.println("Invalid Option");
+                check = 1;
+                //if the user inputs neither player 1 or 2, the loop runs again and the user needs to input another value
+                
+              }
+            } while (check == 1);
+  }
+}
