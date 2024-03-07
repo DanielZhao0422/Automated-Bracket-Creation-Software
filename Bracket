@@ -1,0 +1,45 @@
+import java.util.Random;
+
+class Brackets
+{
+    public int random_player;
+
+    //Constructor
+    public Brackets()
+    {
+
+    }
+
+    //Random Number Generator from 0-16
+    public int random()
+    {
+      Random rand = new Random();
+        
+        int random_player = rand.nextInt(16); 
+
+      return random_player;
+    } 
+
+    //Random Number Generator from 0-8
+     public int random2()
+    {
+      Random rand = new Random();
+        
+        int random_player = rand.nextInt(8); 
+
+      return random_player;
+    } 
+
+    //Random Number Generator from 0-4
+     public int random3()
+    {
+      Random rand = new Random();
+        
+        int random_player = rand.nextInt(4); 
+
+      return random_player;
+    } 
+
+
+    
+}
